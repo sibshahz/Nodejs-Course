@@ -1,0 +1,15 @@
+{
+  "name": "first-package",
+  "version": "1.0.0",
+  "description": "A basic project for the class of Batch-VI Fall-2025",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shahid Gillani",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
