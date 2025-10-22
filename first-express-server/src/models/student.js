@@ -62,3 +62,27 @@ export function getGR() {
   });
   return topper;
 }
+
+export function postStudent(student) {
+  students.push(student);
+}
+
+export function updateStudent(id, student) {
+  students.map((istudent, index) => {
+    if (istudent.id == id) {
+      students[index] = student;
+    }
+  });
+  return student;
+}
+
+export function deleteStudent(id) {
+  let studentToDelete = null;
+  students.map((student, index) => {
+    if (student.id == id) {
+      studentToDelete = index;
+    }
+  });
+  students.splice(studentToDelete, 1);
+  return id;
+}
