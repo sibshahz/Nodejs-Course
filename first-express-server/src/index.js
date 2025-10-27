@@ -7,7 +7,10 @@ import {
   postStudent,
   updateStudent,
   deleteStudent,
+  loadStudents,
 } from "./models/student.js";
+import studentRouter from "./controller/student.router.js";
+import teachersRouter from "./controller/teachers.router.js";
 
 // 25
 const app = express();
@@ -23,7 +26,7 @@ function requestCounter(req, res, next) {
 }
 app.use(requestCounter);
 
-function checkAuthorization(req, res, next) {
+export function checkAuthorization(req, res, next) {
   console.log("Authorization is being checked");
   if (req.headers["role"] == "ADMIN") {
     next();
@@ -36,46 +39,10 @@ app.get("/", (req, res) => {
   res.send("Welcome to express js server");
 });
 
-app.get("/student-list", (req, res) => {
-  res.set({
-    "Content-Type": "text/json",
-    "Content-Length": "123",
-    "Batch-Token": "12345",
-  });
-  res.status(201);
-  res.send(getList());
-});
+app.use("/students", studentRouter);
+app.use("/teachers", teachersRouter);
 
-app.get("/topper", (req, res) => {
-  res.send(getTopper());
-});
-
-app.get("/CR", (req, res) => {
-  res.send(getCR());
-});
-
-app.get("/GR", (req, res) => {
-  res.send(getGR());
-});
-
-app.post("/student", (req, res) => {
-  const newStudent = req.body;
-  postStudent(newStudent);
-  res.send(newStudent);
-});
-
-app.put("/student/:id", (req, res) => {
-  const id = req.params.id;
-  const student = req.body;
-  const response = updateStudent(id, student);
-  res.send(response);
-});
-
-app.delete("/student/:id", checkAuthorization, (req, res) => {
-  const id = req.params.id;
-  const response = deleteStudent(id);
-  res.send(`Student with ${id} is deleted`);
-});
 app.listen(8000, () => {
+  loadStudents();
   console.log("Server is up and running at 8000");
 });

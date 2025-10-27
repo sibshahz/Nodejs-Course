@@ -1,4 +1,6 @@
-const students = [
+import fs from "node:fs";
+import path from "path";
+let students = [
   {
     id: 1,
     name: "Yasir",
@@ -25,6 +27,27 @@ const students = [
   },
 ];
 
+const dir = path.resolve(); // or specify your base directory explicitly if needed
+
+export function loadStudents() {
+  console.log("directory is: ", dir);
+  const filePath = path.join(dir, "src", "data", "students.txt");
+  console.log("Complete path is: ", filePath);
+
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error loading file:", err);
+      return;
+    }
+
+    try {
+      const preparedData = JSON.parse(data);
+      students = preparedData;
+    } catch (parseErr) {
+      console.error("Error parsing JSON:", parseErr);
+    }
+  });
+}
 export function getList() {
   return students;
 }
@@ -65,6 +88,15 @@ export function getGR() {
 
 export function postStudent(student) {
   students.push(student);
+  const content = JSON.stringify(students);
+  // const completePath = path.join(dirname, "../", "data/", "students.txt");
+  fs.writeFile("./src/data/students.txt", content, (err) => {
+    if (err) {
+      console.error("Failed to write file: ", err);
+    } else {
+      console.log("File updated successfully.");
+    }
+  });
 }
 
 export function updateStudent(id, student) {
