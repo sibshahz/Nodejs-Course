@@ -17,7 +17,9 @@ app.get("/", (req, res) => {
 app.listen(8000, async () => {
   console.log("Server is up and running on port 8000!");
   try {
-    await mongoose.connect("mongodb://user:password@127.0.0.1:27017");
+    await mongoose.connect(
+      "mongodb://user:password@127.0.0.1:27017/firstdb?authSource=admin"
+    );
   } catch (error) {
     console.log("Error of connection is: ", error);
   }
