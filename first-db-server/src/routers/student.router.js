@@ -4,10 +4,11 @@ import {
   postStudent,
   getStudentByRollNo,
 } from "../controllers/student.controller.js";
+import { checkAuth } from "../middlewares/auth.middleware.js";
 
 const studentRouter = express.Router();
 
-studentRouter.get("/", async (req, res) => {
+studentRouter.get("/", checkAuth, async (req, res) => {
   const response = await getStudentList();
 
   res.send({

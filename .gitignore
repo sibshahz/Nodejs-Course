@@ -5,6 +5,7 @@
 dist/
 build/
 .env
+**/.env/
 .env.*
 *.log
 npm-debug.log*
